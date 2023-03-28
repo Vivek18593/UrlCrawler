@@ -1,5 +1,7 @@
 from bs4 import BeautifulSoup
-import requests
+import requests, os
+from termcolor import colored
+os.system('color')
 
 paths = []
 def scrap(url):
@@ -34,10 +36,13 @@ def get_links():
         except:
             pass
 
+count = 0
 test_links = []
 def add_url(url):
+    global count
     if url not in test_links:
         test_links.append(url)
+        count+=1
         print(url)
 
 def result():
@@ -47,8 +52,8 @@ def result():
 
 run = True
 while run:
-    baseurl = input('Enter URL: ')
-    print('Crawling...\n')
+    baseurl = input(colored('Enter URL: ','green'))
+    print(colored('Crawling...\n','magenta'))
     scrap(baseurl)
     backup_link = test_links
     for url in backup_link:
@@ -58,8 +63,10 @@ while run:
             except:
                 pass
     #result()
-    print('\nCompleted!')
-    q = input('Do you want to run again?(Y/N): ').lower()
+    print(colored('\nCompleted!','green'))
+    print(colored('Total count of urls found: ','yellow') + colored(f'{count}','red'))
+    print('\n')
+    q = input(colored('Do you want to run again?(Y/N): ','red')).lower()
     if q == 'y':
         run = True
     else:
